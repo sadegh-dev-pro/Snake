@@ -30,5 +30,4 @@ fun MainScreen() {
             snakePixelPositions =snakePixelsPosition
         )
     }
-
 }
