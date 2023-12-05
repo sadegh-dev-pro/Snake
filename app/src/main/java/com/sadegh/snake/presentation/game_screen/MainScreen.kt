@@ -20,14 +20,14 @@ import com.sadegh.snake.presentation.game_screen.components.GameBoard
 
 @Composable
 fun MainScreen() {
-    Surface(modifier = Modifier.fillMaxSize()) {
+    Surface(modifier = remember{ Modifier.fillMaxSize() }) {
 
         val viewModel = viewModel<GameScreenViewModel>()
 
         val snakePixelsPosition by viewModel.snakePixelPositions.collectAsState()
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = remember{ Modifier.fillMaxSize() },
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
