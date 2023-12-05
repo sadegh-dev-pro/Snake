@@ -1,4 +1,4 @@
-package com.sadegh.snake
+package com.sadegh.snake.presentation.game_screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
