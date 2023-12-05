@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class GameScreenViewModel : ViewModel() {
 
-    private val _snakePixelPositions = MutableStateFlow(listOf(0, 1, 2, 3))
+    private val _snakePixelPositions = MutableStateFlow(listOf(0 to 0, 0 to 1, 0 to 2, 0 to 3))
     val snakePixelPositions = _snakePixelPositions.asStateFlow()
 
     private val _uiEvent = MutableSharedFlow<UiEvent>()
