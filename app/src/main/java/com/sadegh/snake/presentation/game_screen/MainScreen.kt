@@ -44,6 +44,7 @@ fun MainScreen() {
                 Modifier
                     .padding(20.dp)
                     .fillMaxWidth(2 / 3f)
+                    .weight(1f)
             }
 
             ControlSection(modifier = controlSectionModifier, onEvent = viewModel::onEvent)
