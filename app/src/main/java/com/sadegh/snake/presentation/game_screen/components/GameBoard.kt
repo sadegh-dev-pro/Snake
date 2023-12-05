@@ -1,6 +1,12 @@
 package com.sadegh.snake.presentation.game_screen.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,41 +26,50 @@ fun GameBoard(
     snakePixelPositions: List<Pair<Int, Int>>
 ) {
 
-    val colorList = remember { listOf(colors.secondColor, colors.firstColor) }
+    val colorList = remember(colors) { listOf(colors.secondColor, colors.firstColor) }
 
-    val snakePixelRowIndices = remember { snakePixelPositions.map { it.first } }
+    val snakePixelRowIndices = remember(snakePixelPositions) {
+        snakePixelPositions.map { it.first }
+    }
 
-    val snakePixelColumnIndices = remember { snakePixelPositions.map { it.second } }
+    val snakePixelColumnIndices = remember(snakePixelPositions) {
+        snakePixelPositions.map { it.second }
+    }
 
-    Canvas(modifier = modifier) {
-
-        val squareSide = this.size.width / numberOfSquaresInWidth
+    Column(modifier = modifier) {
 
         repeat(numberOfSquaresInHeight) { rowIndex ->
 
-            repeat(numberOfSquaresInWidth) { columnIndex ->
+            Row(modifier = Modifier.fillMaxWidth()) {
 
-                val squareColor =
-                    if (
-                        rowIndex in snakePixelRowIndices &&
-                        columnIndex in snakePixelColumnIndices
+                repeat(numberOfSquaresInWidth) { columnIndex ->
+
+                    val squareColor = remember(
+                        snakePixelRowIndices,
+                        snakePixelColumnIndices,
+                        colorList
                     ) {
-                        Color.Blue
-                    } else {
-                        colorList[(rowIndex + columnIndex) % 2]
-
+                        if (
+                            rowIndex in snakePixelRowIndices &&
+                            columnIndex in snakePixelColumnIndices
+                        ) {
+                            Color.Blue
+                        } else {
+                            colorList[(rowIndex + columnIndex) % 2]
+                        }
                     }
 
-                val squareTopLeftOffset = Offset(
-                    x = columnIndex * squareSide,
-                    y = rowIndex * squareSide
-                )
+                    val boxModifier = remember(squareColor) {
+                        Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .background(squareColor)
+                    }
 
-                drawRect(
-                    color = squareColor,
-                    topLeft = squareTopLeftOffset,
-                    size = Size(width = squareSide, height = squareSide)
-                )
+                    Box(
+                        modifier =boxModifier
+                    )
+                }
             }
         }
     }
