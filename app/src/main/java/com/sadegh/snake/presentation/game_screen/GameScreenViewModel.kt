@@ -13,6 +13,15 @@ class GameScreenViewModel : ViewModel() {
     private val _snakePixelPositions = MutableStateFlow(listOf(0 to 0, 0 to 1, 0 to 2, 0 to 3))
     val snakePixelPositions = _snakePixelPositions.asStateFlow()
 
+    private val snakeHeadPosition
+        get() = _snakePixelPositions.value.last()
+
+    private val _numberOfSquaresInHeight = MutableStateFlow(21)
+    val numberOfSquaresInHeight = _numberOfSquaresInHeight.asStateFlow()
+
+    private val _numberOfSquaresInWidth = MutableStateFlow(12)
+    val numberOfSquaresInWidth = _numberOfSquaresInWidth.asStateFlow()
+
     fun onEvent(event: UserEvent) {
 
         when (event) {
@@ -24,18 +33,29 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun onMoveDownButtonClick() {
+        changeSnakePixelsPositions(snakeHeadPosition.copy(first = snakeHeadPosition.first + 1))
     }
 
     private fun onMoveUpButtonClick() {
-
+        changeSnakePixelsPositions(snakeHeadPosition.copy(first = snakeHeadPosition.first - 1))
     }
 
     private fun onMoveRightButtonClick() {
-
-
+        changeSnakePixelsPositions(snakeHeadPosition.copy(second = snakeHeadPosition.first + 1))
     }
 
     private fun onMoveLeftButtonClick() {
+        changeSnakePixelsPositions(snakeHeadPosition.copy(second = snakeHeadPosition.first - 1))
+    }
 
+    private fun changeSnakePixelsPositions(snakeHeadNewPosition: Pair<Int, Int>) {
+
+        val newSnakePixelPositions = mutableListOf<Pair<Int, Int>>()
+
+        for (index in 1.._snakePixelPositions.value.lastIndex) {
+
+            newSnakePixelPositions += _snakePixelPositions.value[index]
+        }
+        newSnakePixelPositions += snakeHeadNewPosition
     }
 }
