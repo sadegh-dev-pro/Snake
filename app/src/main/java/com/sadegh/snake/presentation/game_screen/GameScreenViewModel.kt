@@ -2,6 +2,7 @@ package com.sadegh.snake.presentation.game_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -50,12 +51,14 @@ class GameScreenViewModel : ViewModel() {
 
     private fun changeSnakePixelsPositions(snakeHeadNewPosition: Pair<Int, Int>) {
 
-        val newSnakePixelPositions = mutableListOf<Pair<Int, Int>>()
+        viewModelScope.launch {
+            delay(300)
+            val newSnakePixelPositions = mutableListOf<Pair<Int, Int>>()
+            for (index in 1.._snakePixelPositions.value.lastIndex) {
 
-        for (index in 1.._snakePixelPositions.value.lastIndex) {
-
-            newSnakePixelPositions += _snakePixelPositions.value[index]
+                newSnakePixelPositions += _snakePixelPositions.value[index]
+            }
+            newSnakePixelPositions += snakeHeadNewPosition
         }
-        newSnakePixelPositions += snakeHeadNewPosition
     }
 }
