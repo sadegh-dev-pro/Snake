@@ -42,11 +42,11 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun onMoveRightButtonClick() {
-        changeSnakePixelsPositions(snakeHeadPosition.copy(second = snakeHeadPosition.first + 1))
+        changeSnakePixelsPositions(snakeHeadPosition.copy(second = snakeHeadPosition.second + 1))
     }
 
     private fun onMoveLeftButtonClick() {
-        changeSnakePixelsPositions(snakeHeadPosition.copy(second = snakeHeadPosition.first - 1))
+        changeSnakePixelsPositions(snakeHeadPosition.copy(second = snakeHeadPosition.second - 1))
     }
 
     private fun changeSnakePixelsPositions(snakeHeadNewPosition: Pair<Int, Int>) {
@@ -59,6 +59,7 @@ class GameScreenViewModel : ViewModel() {
                 newSnakePixelPositions += _snakePixelPositions.value[index]
             }
             newSnakePixelPositions += snakeHeadNewPosition
+            _snakePixelPositions.value=newSnakePixelPositions
         }
     }
 }
